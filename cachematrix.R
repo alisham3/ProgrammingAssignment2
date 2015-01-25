@@ -11,15 +11,26 @@ makeCacheMatrix <- function(x = matrix()) {
   a <<- NULL
   }
   get<- function () x
-  set_inverse <- fucntion(solve) a <<- solve
+  set_inverse <- function(solve) a <<- solve
   get_inverse<- function() a 
   list (set = set, get = get, 
         set_inverse = set_inverse,
         get_inverse = get_inverse)
 }
 
-## Write a short comment describing this function
+## cacheSolve makes the invert of makecacheMatrix. If already inverted and matrix
+## has not changed, then cacheSolve makes the inverse of the cache.
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-}
+        a<- x$get_inverse()
+        if(!is.null(a)){
+        message("retrieving cached inverse matrix")
+        return(a)
+        }
+        else{
+        a<- solve(x$get(),...)
+        x$set_inverse(a)
+        return(a)
+      }
+      
